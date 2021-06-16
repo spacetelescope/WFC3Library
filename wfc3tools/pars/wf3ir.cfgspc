@@ -1,0 +1,5 @@
+_task_name_=string_kw(default="wf3ir")
+input = string_kw(default="", comment="Input file (single image or ASN)")
+output = string_kw(default="", comment="Name of the output FITS file")
+verbose = boolean_kw(default=False, comment="Verbose output")
+quiet = boolean_kw(default=True,comment="print messages only to the trailer file?")

@@ -1,0 +1,6 @@
+numpy
+matplotlib
+astropy
+stsci.tools
+scipy
+sphinx_rtd_theme

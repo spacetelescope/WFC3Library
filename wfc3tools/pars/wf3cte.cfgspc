@@ -1,0 +1,4 @@
+_task_name_ = string_kw(default="wf3cte")
+input = string_kw(default="",comment="Input filename, asn, wildcard, list")
+parallel = boolean_kw(default=True, comment="Run with parallel on?")
+verbose = boolean_kw(default=False, comment="Print verbose time stamps?")

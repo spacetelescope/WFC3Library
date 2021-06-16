@@ -1,0 +1,16 @@
+include RELIC-INFO
+include README.rst
+include CHANGES.rst
+
+include setup.py
+include setup.cfg
+
+recursive-include docs *
+recursive-include wfc3tools *
+
+global-exclude *.pyc *.o
+
+prune docs/_build
+prune docs/api
+prune build
+prune dist
