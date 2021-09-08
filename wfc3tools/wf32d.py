@@ -1,7 +1,38 @@
-from __future__ import print_function
+"""
+wf32d:
 
-# get the auto update version for the call to teal help
-from .version import __version_date__, __version__
+    Use this function to facilitate batch runs.
+
+    The wf32d primary functions include:
+
+      - DARKCORR: dark current subtraction
+      - FLATCORR: flat-fielding
+      - PHOTCORR: photometric keyword calculations
+      # Do we still need flux corr
+      - FLUXCORR: photometric normalization of the UVIS1 and UVIS2 chips
+
+    Only those steps with a switch value of PERFORM in the input files will be
+    executed, after which the switch will be set to COMPLETE in the
+    corresponding output files.
+
+The wf32d function can also be called directly from the OS command line:
+
+    >>> wf32d.e input output [-options]
+
+    Where the OS options include:
+
+        * -v: verbose
+        * -t: print time stamps
+        * -d: debug
+        * -dark: perform dark subtraction
+        * -dqi: update the DQ array
+        * -flat: perform flat correction
+        * -shad: perform shading correction
+        * -phot: perform phot correction
+
+"""
+
+from __future__ import print_function
 
 # STDLIB
 import os.path
@@ -10,20 +41,75 @@ import subprocess
 # STSCI
 from stsci.tools import parseinput
 from .util import error_code
-try:
-    from stsci.tools import teal
-    has_teal = True
-except ImportError:
-    has_teal = False
-    print("Teal not available")
-
-__taskname__ = "wf32d"
 
 
 def wf32d(input, output=None, dqicorr="PERFORM", darkcorr="PERFORM",
           flatcorr="PERFORM", shadcorr="PERFORM", photcorr="PERFORM",
           verbose=False, quiet=True, debug=False, log_func=print):
-    """  Call the wf32d.e executable."""
+    """
+    Call the wf32d.e executable.
+
+    Parameters
+    ----------
+    input : str or list
+        Name of input files, such as
+        - a single filename (``iaa012wdq_raw.fits``)
+        - a Python list of filenames
+        - a partial filename with wildcards (``\*raw.fits``)
+        - filename of an ASN table (``\*asn.fits``)
+        - an at-file (``@input``)
+
+    output : str, default=None
+        Name of the output FITS file.
+
+    dqicorr : str, optional, default="PERFORM"
+        Update the dq array from bad pixel table. Allowed values are "PERFORM"
+        and "OMIT".
+
+    darkcorr : str, optional, default="PERFORM"
+        Subtract the dark image. Allowed values are "PERFORM" and "OMIT".
+
+    flatcorr : str, optional, default="PERFORM"
+        Multiply by the flatfield image. Allowed values are "PERFORM" and
+        "OMIT".
+
+    shadcorr : str, optional, default="PERFORM"
+        Correct for shutter shading (CCD). Allowed values are "PERFORM" and
+        "OMIT".
+
+    photcorr : str, optional, default="PERFORM"
+        Update photometry keywords in the header. Allowed values are "PERFORM"
+        and "OMIT".
+
+    verbose : bool, optional, default=False
+        If True, print verbose time stamps.
+
+    quiet : bool, optional, default=True
+        If True, print messages only to trailer file.
+
+    debug : bool, optional, default=False
+        If True, print debugging statements.
+
+    log_func : func(), default=print()
+        If not specified, the print function is used for logging to facilitate
+        use in the Jupyter notebook.
+
+    DO WE STILL NEED THIS?
+    fluxcorr : str, optional, default="PERFORM"
+        Perform chip photometry normalization. Allowed values are "PERFORM" and
+        "OMIT".
+
+    Returns
+    -------
+    None
+
+    Examples
+    --------
+    >>> from wfc3tools import wf32d
+    >>> filename = '/path/to/some/wfc3/image.fits'
+    >>> wf32d(filename)
+
+    """
 
     call_list = ['wf32d.e']
     return_code = None
@@ -84,51 +170,8 @@ def wf32d(input, output=None, dqicorr="PERFORM", darkcorr="PERFORM",
             ec = return_code
         raise RuntimeError("wf32d.e exited with code {}".format(ec))
 
-
-def help(file=None):
-    helpstr = getHelpAsString(docstring=True)
-    if file is None:
-        print(helpstr)
-    else:
-        if os.path.exists(file):
-            os.remove(file)
-        f = open(file, mode='w')
-        f.write(helpstr)
-        f.close()
-
-
-def getHelpAsString(docstring=False):
-    """Return documentation on the 'wf3ir' function. Required by TEAL."""
-
-    install_dir = os.path.dirname(__file__)
-    htmlfile = os.path.join(install_dir, 'htmlhelp', __taskname__ + '.html')
-    helpfile = os.path.join(install_dir, __taskname__ + '.help')
-    if docstring or (not docstring and not os.path.exists(htmlfile)):
-        helpString = ' '.join([__taskname__, 'Version', __version__,
-                               ' updated on ', __version_date__]) + '\n\n'
-        if os.path.exists(helpfile) and has_teal:
-            helpString += teal.getHelpFileAsString(__taskname__, __file__)
-    else:
-        helpString = 'file://' + htmlfile
-
-    return helpString
-
-
-wf32d.__doc__ = getHelpAsString(docstring=True)
-
-
-def run(configobj=None):
-    """
-    TEAL interface for the ``wf32d`` function.
-
-    """
-    wf32d(configobj['input'],
-          output=configobj['output'],
-          dqicorr=configobj['dqicorr'],
-          darkcorr=configobj['darkcorr'],
-          flatcorr=configobj['flatcorr'],
-          shadcorr=configobj['shadcorr'],
-          photcorr=configobj['photcorr'],
-          quiet=configobj['quiet'],
-          verbose=configobj['verbose'],
-          debug=configobj['debug'])
+#check to see if this makes sense
+if __name__ == "main":
+    """called system prompt, return the default corner locations """
+    import sys
+    wf32d(sys.argv[1])

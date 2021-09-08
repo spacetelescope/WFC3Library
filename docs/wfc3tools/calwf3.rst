@@ -8,7 +8,7 @@ calwf3
 
 .. note::
 
-    During automatic pipeline processing by the STScI archive, `Astrodrizzle` follows `calwf3`. All calibrated images are corrected for geometric distortion and associated sets of dithered images are combined into a single product. See the WFC3 Data Handbook for more information, or `Astrodrizzle <http://www.stsci.edu/hst/HST_overview/drizzlepac/>`_ .
+    During automatic pipeline processing by the STScI archive, `Astrodrizzle` follows `calwf3`. All calibrated images are corrected for geometric distortion and associated sets of dithered images are combined into a single product. See the WFC3 Data Handbook for more information, or `Astrodrizzle <https://www.stsci.edu/scientific-community/software/drizzlepac.html>`_ .
 
 
 Where to Find calwf3
@@ -17,10 +17,10 @@ Where to Find calwf3
 `calwf3` is part of HSTCAL package, which can be downloaded separately from its GIT repository in the `Spacetelescope <https://github.com/spacetelescope/hstcal>`_ area.  It's binaries are also installed along with the STScI distributed package `Astroconda <http://astroconda.readthedocs.io/en/latest/installation.html>`_ .
 
 
-A detailed description of the improvements in `calwf3 v3.3`, which is more generally referred to as the UVIS2.0 update, can be found in the `February 22, 2016 issue of the STAN <http://www.stsci.edu/hst/wfc3/documents/newsletters/STAN_02_23_2016#STANIssue22-CALWF3Version3.3>`_.
+A detailed description of the improvements in `calwf3 v3.3`, which is more generally referred to as the UVIS2.0 update, can be found in the `February 22, 2016 issue of the STAN <https://www.stsci.edu/contents/news/wfc3-stans/wfc3-stan-issue-22-february-2016.html#h3-CK-04ec3e61-697b-4ea2-9259-75ae75075f63>`_.
 
-The current WFC3 Data Handbook can be found at  http://www.stsci.edu/hst/wfc3/documents/handbooks/currentDHB/ .
-In the meantime, if you have questions not answered in this documentation, please contact STScI Help Desk (help[at]stsci.edu).
+The current WFC3 Data Handbook can be found at  https://www.stsci.edu/files/live/sites/www/files/home/hst/instrumentation/wfc3/_documents/wfc3_dhb.pdf .
+In the meantime, if you have questions not answered in this documentation, please contact STScI Help Desk (help@stsci.edu).
 You may also submit a github issue for either the HSTCAL or WFC3TOOLs repositories.
 
 .. note::
@@ -53,51 +53,45 @@ The :ref:`wf3ccd`, :ref:`wf32d`, :ref:`wf3cte` and :ref:`wf3ir` tasks on the oth
 Running `calwf3` from a python terminal using `wfc3tools`
 ---------------------------------------------------------
 
-In Python without TEAL:
-
 .. code-block:: python
 
     from wfc3tools import calwf3
     calwf3(filename)
 
-In Python with TEAL:
-
-.. code-block:: python
-
-    from stsci.tools import teal
-    from wfc3tools import calwf3
-    teal.teal('calwf3')
-
 Parameter Options
 ~~~~~~~~~~~~~~~~~
-* input: str
-    Name of input files
-    * a single filename (iaa012wdq_raw.fits)
-    * a Python list of filenames
-    * a partial filename with wildcards (\*raw.fits)
-    * filename of an ASN table (\*asn.fits)
-* printtime: bool
-    print a detailed time stamp
-* save_tmp: bool
-    save temporary files
-* debug: bool
-    print optionsl debugging statements
-* parallel: bool
-    run the code with OpemMP parallel processing turned on for the UVIS CTE correction
-* log_func: func()
-    if not specified, the print function is used for logging to facilitate use in the Jupyter notebook
-* verbose: bool, optional
-    Print verbose time stamps?
-* quiet: bool, optional
-    Print messages only to trailer file?
+* input : str or list, default=None
+    Name of input files, such as
+    - a single filename (iaa012wdq_raw.fits)
+    - a Python list of filenames
+    - a partial filename with wildcards (\*raw.fits)
+    - filename of an ASN table (\*asn.fits)
 
+* output : WHAT IS TYPE, default=None
+    WHAT IS OUTPUT
 
-In Pyraf:
+* printtime : bool, default=False
+    If True, print a detailed time stamp.
 
-.. code-block:: python
+* save_tmp : bool, default=False
+    If True, save temporary files.
 
-    import wfc3tools
-    epar calwf3
+* verbose : bool, optional, default=False
+    If True, print verbose time stamps.
+
+* debug : bool, default=False
+    If True, print optional debugging statements.
+
+* parallel : bool, default=True
+    If True, run the code with OpemMP parallel processing turned on for the
+    UVIS CTE correction.
+
+* version : bool, default=False
+    If True, WHAT IS VERSION???
+
+* log_func : func(), default=print()
+    If not specified, the print function is used for logging to facilitate
+    use in the Jupyter notebook.
 
 
 Running many files at the same time
@@ -140,17 +134,17 @@ with an input file and a list of options. This is the same executable that the w
     calwf3.e -vts iaa012wdq_raw.fits
 
 
-    input: str
+    input : str
         Name of input files
             a single filename (``iaa012wdq_raw.fits``)
             the filename of an ASN table (``*_asn.fits``)
 
+        -r : WHATEVER VERSION DOES
         -t : print a detailed time stamp
         -s : save temporary files
+        -v : print verbose time stamps and information
         -d : print optional debugging statements
         -1 : suppress the OpemMP parallel processing for the UVIS CTE correction
-        -v : Print verbose time stamps and information
-        -q : Print messages only to trailer file
 
 
 Running many files at the same time
@@ -170,7 +164,7 @@ Types of files used as input to calwf3
 * _raw file: name of an individual, uncalibrated exposure
 * _crj file: name of any sub-product from an association table
 
-While both CR-SPLIT and REPEAT-OBS exposures from an association get combined using `calwf3`, dithered observations from an association will be combined using `Astrodrizzle <http://www.stsci.edu/hst/HST_overview/drizzlepac/>`_. Images taken at a given dither position can be additionally CR-SPLIT (UVIS only) into multiple exposures.
+While both CR-SPLIT and REPEAT-OBS exposures from an association get combined using `calwf3`, dithered observations from an association will be combined using `Astrodrizzle <https://www.stsci.edu/scientific-community/software/drizzlepac.html>`_. Images taken at a given dither position can be additionally CR-SPLIT (UVIS only) into multiple exposures.
 
 
 When `calwf3` is given an input file, it first discovers which of the above types of files it has provided; a single image, an association table, or a product from an association table. It will then make sure the specified input exists. It then checks to see which DETECTOR the data was observed with and calls the appropriate processing pipeline, either UVIS or IR.
@@ -202,7 +196,7 @@ exposures are combined only with Astrodrizzle, which executes after `calwf3` has
 finished processing all members.
 
 PROD-RPT and PROD-CRJ products are combined useing :ref:`wf3rej` and all output files
-have the cr? extension.
+have the cr extension.
 
 Here's an example of what an association table might contain:
 
@@ -309,13 +303,13 @@ _crc       UVIS calibrated, CR rejected, CTE cleaned image      :math:`e^{-}`
 ========   =================================================    ====================
 
 
-** DRZ and DRC products are produced with Astrodrizzle, see `Astrodrizzle <http://www.stsci.edu/hst/HST_overview/drizzlepac/>`_ **
+** DRZ and DRC products are produced with Astrodrizzle, see `Astrodrizzle <https://www.stsci.edu/scientific-community/software/drizzlepac.html>`_ **
 
 
 Keyword Usage
 -------------
 
-`calwf3` processing is controlled by the values of keywords in the input image headers. Certain keywords, referred to as calibration switches, are used to control which calibration steps are performed. Reference file keywords indicate which reference files to use in the various calibration steps. Users who wish to perform custom reprocessing of their data may change the values of these keywords in the `_raw` FITS file primary headers and then rerun the modified file through  `calwf3`. See the `WFC3 Data Handbook <http://www.stsci.edu/hst/wfc3/documents/handbooks/currentDHB/wfc3_Ch25.html>`_ for a more complete description of these keywords and their values.
+`calwf3` processing is controlled by the values of keywords in the input image headers. Certain keywords, referred to as calibration switches, are used to control which calibration steps are performed. Reference file keywords indicate which reference files to use in the various calibration steps. Users who wish to perform custom reprocessing of their data may change the values of these keywords in the `_raw` FITS file primary headers and then rerun the modified file through  `calwf3`. See the `WFC3 Data Handbook <https://www.stsci.edu/files/live/sites/www/files/home/hst/instrumentation/wfc3/_documents/wfc3_dhb.pdf>`_ for a more complete description of these keywords and their values.
 
 
 Using CRDS to update your reference files

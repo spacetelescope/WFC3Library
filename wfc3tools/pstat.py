@@ -1,7 +1,40 @@
-from __future__ import division, print_function
+"""
+pstat:
 
-# get the auto update version
-from .version import __version_date__, __version__
+    Plot statistics for a specified image section up the stack of an IR
+    MultiAccum image.  Sections from any of the SCI, ERR, DQ, image extensions
+    can be plotted.  A choice of  mean, median, mode, standard deviation,
+    minimum, and maximum statistics is available. The total number of samples is
+    determined from the primary header keyword NSAMP and all samples (excluding
+    the zeroth-read) are plotted. The SCI, ERR, DQ statistics are plotted as a
+    function of sample time. The sample times are read from the SAMPTIME
+    keyword in the SCI header for each readout.
+
+    SAMP and TIME aren't generally populated until the FLT image stage. To plot
+    the samptime vs sample, use wfc3tools.pstat and the "time" extension.
+
+Usage:
+
+    >>> from wfc3tools import pstat
+    >>> time, counts = pstat('ibh719grq_ima.fits')
+    >>> time
+    array([ 100.651947,   93.470573,   86.2892  ,   79.107826,   71.926453,
+             64.745079,   57.563702,   50.382328,   43.200954,   36.019581,
+             28.838205,   21.65683 ,   14.475455,    7.29408 ,    0.112705,
+              0.      ])
+    >>> counts
+    array([ 171.85813415,  162.44643275,  148.99918831,  137.60458714,
+            125.91510743,  114.71149769,  102.63038466,   90.97130078,
+             78.26479365,   67.16825321,   53.6897243 ,   41.71639092,
+             29.36628817,   16.47151355,   -0.20821257,    0.        ])
+
+Warning:
+
+    Note that the arrays are structured in SCI order, so the final exposure is the first element in the array.
+
+"""
+
+from __future__ import division, print_function
 
 # STDLIB
 import os
@@ -10,69 +43,72 @@ import numpy as np
 from matplotlib import pyplot as plt
 from scipy.stats import mode as mode
 
-# STSCI
-from stsci.tools import teal
-
-__taskname__ = "pstat"
-
 plt.ion()
 
 
 def pstat(filename, extname="sci", units="counts", stat="midpt", title=None,
           xlabel=None, ylabel=None, plot=True, overplot=False):
-    """A function to plot the statistics of one or more pixels up an IR ramp.
+    """
+    A function to plot the statistics of one or more pixels up an IR ramp.
 
     Parameters
     ----------
-    filename: string
-       Input   MultiAccum   image  name  with  optional  image  section
-       specification.  If no image section  is  specified,  the  entire image
-       is  used.   This  should  be  either a _raw or _ima file, containing all
-       the  data  from  multiple  readouts.   You  must specify  just  the
+    filename : str
+       Input MultiAccum image name with optional image section
+       specification.  If no image section is specified, the entire image
+       is used.  This should be either a _raw or _ima file, containing all
+       the data from multiple readouts.  You must specify just the
        file name and image section, with no extname designation.
 
-    extname:  {"sci", "err", "dq"}
-       Extension name (EXTNAME keyword value) of data to plot.
+    extname :  str, default="sci"
+       Extension name (EXTNAME keyword value) of data to plot. Allowed values
+       are "sci", "err", and "dq".
 
-    units: {"counts", "rate"}
-       Plot "sci" or  "err"  data  in  units  of  counts  or  countrate
-       ("rate").   Input data can be in either unit; conversion will be
-       performed automatically.  Ignored when  plotting  "dq",  "samp", or
-       "time" data.
+    units : str, default="counts"
+       Plot "sci" or "err" data in units of counts or countrate
+       ("rate").  Input data can be in either unit; conversion will be
+       performed automatically.  Ignored when plotting "dq", "samp", or
+       "time" data. Allowed values are "counts" and "rate".
 
-    stat: { "mean", "midpt", "mode", "stddev", "min", "max"}
-       Type of statistic to compute.
+    stat : str, default="midpt"
+       Type of statistic to compute. Allowed values are "mean", "midpt",
+       "mode", "stddev", "min", and "max".
 
-    title: str
-       Title  for  the  plot.   If  left  blank,  the name of the input image,
+    title : str, default=None
+       Title for the plot.  If left blank, the name of the input image,
        appended with the extname and image section, is used.
 
-    xlabel: str
-       Label for the X-axis of the plot.  If  left  blank,  a  suitable default
+    xlabel : str, default=None
+       Label for the X-axis of the plot.  If left blank, a suitable default
        is generated.
 
-    ylabel: str
-       Label  for  the  Y-axis  of  the plot. If left blank, a suitable default
-       based on the plot units and the extname of the  data  is generated.
+    ylabel : str, default=None
+       Label for the Y-axis of the plot. If left blank, a suitable default
+       based on the plot units and the extname of the data is generated.
 
-    plot: Bool
-       Set plot to false if you only want the data returned
+    plot : bool, default=True
+       If False, return data and do not plot.
 
-    overplot: Bool
-       If True, the results will be overplotted on the previous plot
+    overplot : bool, default=False
+       If True, the results will be overplotted on the previous plot.
 
     Returns
     -------
-    xaxis: numpy.ndarray
-       Array of x-axis values that will be plotted
+    xaxis : numpy.ndarray
+       Array of x-axis values that will be plotted.
 
-    yaxis: numpuy.ndarray
-       Array of y-axis values that will be plotted as specified by 'units'
-
+    yaxis : numpuy.ndarray
+       Array of y-axis values that will be plotted as specified by 'units'.
 
     Notes
     -----
-    Pixel values here are 0 based, not 1 based
+    Pixel values here are 0 based, not 1 based.
+
+    Examples
+    --------
+    >>> from wfc3tools import pstat
+    >>> time, counts = pstat('ibh719grq_ima.fits')
+
     """
 
     # pull the image extension from the filename string
@@ -210,39 +246,8 @@ def pstat(filename, extname="sci", units="counts", stat="midpt", title=None,
 
     return xaxis, yaxis
 
-
-def getHelpAsString(docstring=False):
-    """Return documentation on the 'wf3ir' function. Required by TEAL."""
-
-    install_dir = os.path.dirname(__file__)
-    htmlfile = os.path.join(install_dir, 'htmlhelp', __taskname__ + '.html')
-    helpfile = os.path.join(install_dir, __taskname__ + '.help')
-    if docstring or (not docstring and not os.path.exists(htmlfile)):
-        helpString = ' '.join([__taskname__, 'Version', __version__,
-                               ' updated on ', __version_date__]) + '\n\n'
-        if os.path.exists(helpfile):
-            helpString += teal.getHelpFileAsString(__taskname__, __file__)
-    else:
-        helpString = 'file://' + htmlfile
-
-    return helpString
-
-
-def help(file=None):
-    """
-    Print out syntax help for running wf3ir
-
-    """
-
-    helpstr = getHelpAsString(docstring=True)
-    if file is None:
-        print(helpstr)
-    else:
-        if os.path.exists(file):
-            os.remove(file)
-        f = open(file, mode='w')
-        f.write(helpstr)
-        f.close()
-
-
-pstat.__doc__ = getHelpAsString(docstring=True)
+#check to see if this makes sense
+if __name__ == "main":
+    """called system prompt, return the default corner locations """
+    import sys
+    pstat(sys.argv[1])

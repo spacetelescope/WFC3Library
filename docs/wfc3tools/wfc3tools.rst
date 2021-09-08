@@ -63,14 +63,6 @@ wfc3tools.util module
     :undoc-members:
     :show-inheritance:
 
-wfc3tools.version module
-------------------------
-
-.. automodule:: wfc3tools.version
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 wfc3tools.wf32d module
 ----------------------
 

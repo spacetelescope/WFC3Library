@@ -19,21 +19,26 @@ Note that the samples of a MultiAccum exposure  are  stored  in  the FITS  file 
 with  IMSET=NSAMP,   SAMPNUM=0, SAMPTIME=0,  and  DELTATIM=0. The final read of the exposure appears first in the file  and  has  IMSET=1,  SAMPNUM=NSAMP-1  (SAMPNUM  is zero-indexed), and SAMPTIME=EXPTIME.
 
 
-Options
+Parameters
+==========
+
+* imagelist : str or list
+    The input can be a single image or list of images.
+
+* add_keys : list, default=None
+    A list of of additional keys for printing. If a key is not found in
+    the sample, the global header will be checked. If a key is not found, the "NA" string will be printed.
+
+* mean : bool, default=False
+    If True, print the mean statistic.
+
+* median : bool, default=False
+    If True, print the median statistic.
+
+Returns
 =======
 
-This version will accept a single image name or a python list of images. The list of images should be a python style list, such as:
-
-.. code-block:: python
-
-        imagelist = ["image1.fits", "image2.fits"]
-
-add_keys=list(): You can also supply a supplimental list of keywords to print for each sample, if the key isn't found in the sample the global header will be checked.If a key is not found the "NA" string will be printed.
-Additionally you can ask for the median or mean of the datavalues for each sample  using the appropriate switch.
-
-median=False: Set to True in order to report the median pixel value for each sample
-
-mean=False: Set to True in order to report the mean pixel value for each sample (as measured with np.min and np.max)
+None
 
 
 Usage
@@ -44,16 +49,25 @@ Usage
     from wfc3tools import sampinfo
     sampinfo(imagename)
 
-Where imagename can be a single filename or a python list() of names
+Where imagename can be a single filename or a Python list() of names
 
 To get the median value for each sample:
-    sampinfo.sampinfo(imagename, median=True)
+
+.. code-block:: python
+
+    sampinfo(imagename, median=True)
 
 To print additional keys for information:
-    sampinfo.sampinfo(imagename,add_keys=["DETECTOR"])
 
-To get the average balue for each sample:
-    sampinfo.sampinfo(imagename, mean=True)
+.. code-block:: python
+
+    sampinfo(imagename,add_keys=["DETECTOR"])
+
+To get the average value for each sample:
+
+.. code-block:: python
+
+    sampinfo(imagename, mean=True)
 
 Example Output
 ==============
@@ -84,7 +98,7 @@ Default output:
     15	1	2.932291	2.932291
     16	0	0.0	0.0
 
-with median=True:
+Optional output:
 
 ::
 

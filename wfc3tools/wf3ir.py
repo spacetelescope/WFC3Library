@@ -1,7 +1,41 @@
-from __future__ import print_function
+"""
+wf3ir:
 
-# get the auto update version for the call to teal help
-from .version import __version_date__, __version__
+    Use this function to facilitate batch runs.
+
+    This routine contains all the instrumental calibration steps for
+    WFC3 IR channel images. The steps are:
+
+        - DQICORR: initialize the data quality array
+        - ZSIGCORR: estimate the amount of signal in the zeroth-read
+        - BLEVCORR: subtract the bias level from the reference pixels
+        - ZOFFCORR: subtract the zeroth read image
+        - NLINCORR: correct for detector non-linear response
+        - DARKCORR: subtract the dark current image
+        - PHOTCORR: compute the photometric keyword values
+        - UNITCORR: convert to units of count rate
+        - CRCORR: fit accumulating signal and identify the cr hits
+        - FLATCORR: divide by the flatfield images and apply gain conversion
+
+    The output images include the calibrated image ramp (ima file) and the
+    accumulated ramp image (flt file).
+
+    Only those steps with a switch value of PERFORM in the input files
+    will be executed, after which the switch will be set to COMPLETE in the
+    corresponding output files.
+
+*The wf3ir function can also be called directly from the OS command line:
+
+    >>> wf32ir.e input output [-options]
+
+    Where the OS options include:
+
+        * -v: verbose
+        * -t: print time stamps
+
+"""
+
+from __future__ import print_function
 
 # STDLIB
 import os.path
@@ -10,18 +44,46 @@ import subprocess
 # STSCI
 from stsci.tools import parseinput
 from .util import error_code
-try:
-    from stsci.tools import teal
-    has_teal = True
-except ImportError:
-    has_teal = False
-    print("Teal not available")
-
-__taskname__ = "wf3ir"
 
 
 def wf3ir(input, output=None, verbose=False, quiet=True, log_func=print):
-    """Call the wf3ir.e executable """
+    """
+    Call the wf3ir.e executable.
+
+    Parameters
+    ----------
+    input : str
+        Name of input files, such as
+        - a single filename (``iaa012wdq_raw.fits``)
+        - a Python list of filenames
+        - a partial filename with wildcards (``\*raw.fits``)
+        - filename of an ASN table (``\*asn.fits``)
+        - an at-file (``@input``)
+
+    output : str, default=None
+        Name of the output FITS file.
+
+    verbose : bool, optional, default=False
+        If True, print verbose time stamps.
+
+    quiet : bool, optional, default=True
+        If True, print messages only to trailer file.
+
+    log_func : func(), default=print()
+        If not specified, the print function is used for logging to facilitate
+        use in the Jupyter notebook.
+
+    Returns
+    -------
+    None
+
+    Examples
+    --------
+    >>> from wfc3tools import wf3ir
+    >>> filename = '/path/to/some/wfc3/image.fits'
+    >>> wf3ir(filename)
+
+    """
 
     call_list = ['wf3ir.e']
     return_code = None
@@ -64,50 +126,8 @@ def wf3ir(input, output=None, verbose=False, quiet=True, log_func=print):
             ec = return_code
         raise RuntimeError("wf3ir.e exited with code {}".format(ec))
 
-
-def run(configobj=None):
-    """
-    TEAL interface for the ``wf3ir`` function.
-
-    """
-    wf3ir(configobj['input'],
-          output=configobj['output'],
-          quiet=configobj['quiet'],
-          verbose=configobj['verbose'],)
-
-
-def getHelpAsString(docstring=False):
-    """Return documentation on the 'wf3ir' function. Required by TEAL."""
-
-    install_dir = os.path.dirname(__file__)
-    htmlfile = os.path.join(install_dir, 'htmlhelp', __taskname__ + '.html')
-    helpfile = os.path.join(install_dir, __taskname__ + '.help')
-    if docstring or (not docstring and not os.path.exists(htmlfile)):
-        helpString = ' '.join([__taskname__, 'Version', __version__,
-                               ' updated on ', __version_date__]) + '\n\n'
-        if os.path.exists(helpfile) and has_teal:
-            helpString += teal.getHelpFileAsString(__taskname__, __file__)
-    else:
-        helpString = 'file://' + htmlfile
-
-    return helpString
-
-
-def help(file=None):
-    """
-    Print out syntax help for running wf3ir
-
-    """
-
-    helpstr = getHelpAsString(docstring=True)
-    if file is None:
-        print(helpstr)
-    else:
-        if os.path.exists(file):
-            os.remove(file)
-        f = open(file, mode='w')
-        f.write(helpstr)
-        f.close()
-
-
-wf3ir.__doc__ = getHelpAsString(docstring=True)
+#check to see if this makes sense
+if __name__ == "main":
+    """called system prompt, return the default corner locations """
+    import sys
+    wf3ir(sys.argv[1])

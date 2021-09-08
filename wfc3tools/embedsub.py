@@ -1,7 +1,26 @@
+"""
+embedsub:
+
+    Given an image specified by the user which contains a subarray readout,
+    return a full-frame image with the subarray implanted at the appropriate
+    location.
+
+Parameters:
+
+    files [file]
+        Input image name or list of image names. The rootname will be used to
+        create the output name.
+
+Returns:
+
+    Return the full-frame location of the subarray coordinates using a file
+    specified by the user.
+
+"""
+
 from __future__ import absolute_import, division, print_function
 
 # get the auto update version
-from .version import __version__, __version_date__
 from .sub2full import sub2full
 
 # STDLIB
@@ -11,23 +30,31 @@ import numpy
 
 # STSCI
 from stsci.tools import parseinput
-from stsci.tools import teal
-
-__taskname__ = "embedsub"
 
 
 def embedsub(files):
-    """Return the full-frame location of the subarray.
+    """
+    Return the full-frame location of the subarray.
+
+    The output file will contain the subarray image placed inside the full
+    frame extent of a regular image.
 
     Parameters
     ----------
-    filename : string
-       The name of the image file containing the subarray. This can be a
-       single filename or a list of files. The ippsoot will be used to
-       construct the output filename. You should input an FLT image
+    files : str or list
+        The name of the image file containing the subarray. This can be a
+        single filename or a list of files. The ippsoot will be used to
+        construct the output filename. You should input an FLT image.
 
-    The output file will contain the subarray image placed inside the full
-    frame extent of a regular image
+    Returns
+    -------
+    None
+
+    Examples
+    --------
+    >>> from wfc3tools import embedsub
+    >>> filename = '/path/to/some/wfc3/image.fits'
+    >>> embedsub(filename)
 
     """
     uvis = False
@@ -122,43 +149,6 @@ def embedsub(files):
         # close the input files
         flt.close()
         print("Image saved to: %s" % (full))
-
-
-def getHelpAsString(docstring=False):
-    """Return documentation on the 'wf3ir' function. Required by TEAL."""
-
-    install_dir = os.path.dirname(__file__)
-    htmlfile = os.path.join(install_dir, 'htmlhelp', __taskname__ + '.html')
-    helpfile = os.path.join(install_dir, __taskname__ + '.help')
-    if docstring or (not docstring and not os.path.exists(htmlfile)):
-        helpString = ' '.join([__taskname__, 'Version', __version__,
-                               ' updated on ', __version_date__]) + '\n\n'
-        if os.path.exists(helpfile):
-            helpString += teal.getHelpFileAsString(__taskname__, __file__)
-    else:
-        helpString = 'file://' + htmlfile
-
-    return helpString
-
-
-def help(file=None):
-    """
-    Print out syntax help for running wf3ir
-
-    """
-
-    helpstr = getHelpAsString(docstring=True)
-    if file is None:
-        print(helpstr)
-    else:
-        if os.path.exists(file):
-            os.remove(file)
-        f = open(file, mode='w')
-        f.write(helpstr)
-        f.close()
-
-
-embedsub.__doc__ = getHelpAsString(docstring=True)
 
 if __name__ == "main":
     """called system prompt, return the default corner locations """

@@ -1,31 +1,112 @@
+"""
+wf3rej:
+
+    This calls the wf3rej executable. Use this function to facilitate batch
+    runs.
+
+The wf3rej executable can also be called directly from the OS command line
+prompt:
+
+    >>> wf3rej.e input output [-options]
+
+    Input can be a single file, or a comma-delimited list of files.
+
+    Where the OS options include:
+
+        * -v: verbose
+        * -t: print the timestamps
+        * -shadcorr: perform shading shutter correction
+        * -crmask: flag CR in input DQ images
+        * -table <filename>: the crrejtab filename
+        * -scale <number>: scale factor for noise
+        * -init <med|min>: initial value estimate scheme
+        * -sky <none|median|mode>: how to compute sky
+        * -sigmas: rejection levels for each iteration
+        * -radius <number>: CR expansion radius
+        * -thresh <number> : rejection propagation threshold
+        * -pdq <number>: data quality flag bits to reject
+
+"""
+
 from __future__ import print_function
 
 # STDLIB
 import os.path
 import subprocess
 
-# get the auto update version for the call to teal help
-from .version import __version_date__, __version__
-
 # STSCI
 from stsci.tools import parseinput
 from .util import error_code
-
-try:
-    from stsci.tools import teal
-    has_teal = True
-except ImportError:
-    has_teal = False
-    print("Teal not available")
-
-__taskname__ = "wf3rej"
 
 
 def wf3rej(input, output="", crrejtab="", scalense="", initgues="",
            skysub="", crsigmas="", crradius=0, crthresh=0,
            badinpdq=0, crmask=False, shadcorr=False, verbose=False,
            log_func=print):
-    """call the calwf3.e executable"""
+    """
+    Call the calwf3.e executable.
+
+    Parameters
+    ----------
+    input : str or list
+        Name of input files, such as
+        - a single filename (``iaa012wdq_raw.fits``)
+        - a Python list of filenames
+        - a partial filename with wildcards (``\*raw.fits``)
+        - filename of an ASN table (``\*asn.fits``)
+        - an at-file (``@input``)
+
+    output : str, default=""
+        Name of the output FITS file.
+
+    crrejtab : str, default=""
+        Reference file name.
+
+    scalense : str, default="" (IS THIS A FLOAT)
+        Scale factor applied to noise.
+
+    initgues : str, default=""
+        Initial value estimate scheme (min|med).
+
+    skysub : str, default=""
+        How to compute the sky (none|mode|mean).
+
+    crsigmas : str, default="" (IS THIS A FLOAT)
+        Rejection levels in each iteration.
+
+    crradius : float, default=0
+        Cosmic ray expansion radius in pixels.
+
+    crthresh : float, default=0
+        Rejection propagation threshold.
+
+    badinpdq : int, default=0
+        Data quality flag bits to reject.
+
+    crmask : bool, default=False
+        If True, flag CR in input DQ images.
+
+    shadcorr : bool, default=False
+        If True, perform shading shutter correction.
+
+    verbose : bool, optional, default=False
+        If True, Print verbose time stamps.
+
+    log_func : func(), default=print()
+        If not specified, the print function is used for logging to facilitate
+        use in the Jupyter notebook.
+
+    Returns
+    -------
+    None
+
+    Examples
+    --------
+    >>> from wfc3tools import wf3rej
+    >>> filename = '/path/to/some/wfc3/image.fits'
+    >>> wf3rej(filename)
+
+    """
 
     call_list = ["wf3rej.e"]
     return_code = None
@@ -120,54 +201,8 @@ def wf3rej(input, output="", crrejtab="", scalense="", initgues="",
             ec = return_code
         raise RuntimeError("wf3rej.e exited with code {}".format(ec))
 
-
-def help(file=None):
-    helpstr = getHelpAsString(docstring=True)
-    if file is None:
-        print(helpstr)
-    else:
-        if os.path.exists(file):
-            os.remove(file)
-        f = open(file, mode='w')
-        f.write(helpstr)
-        f.close()
-
-
-def getHelpAsString(docstring=False):
-    """Return documentation on the 'wf3ir' function. Required by TEAL."""
-
-    install_dir = os.path.dirname(__file__)
-    htmlfile = os.path.join(install_dir, 'htmlhelp', __taskname__ + '.html')
-    helpfile = os.path.join(install_dir, __taskname__ + '.help')
-    if docstring or (not docstring and not os.path.exists(htmlfile)):
-        helpString = ' '.join([__taskname__, 'Version', __version__,
-                               ' updated on ', __version_date__]) + '\n\n'
-        if os.path.exists(helpfile) and has_teal:
-            helpString += teal.getHelpFileAsString(__taskname__, __file__)
-    else:
-        helpString = 'file://' + htmlfile
-
-    return helpString
-
-
-def run(configobj=None):
-    """TEAL interface for the ``wf3rej`` function."""
-
-    wf3rej(configobj['input'],
-           output=configobj['output'],
-           crrejtab=configobj['crrejtab'],
-           scalense=configobj['scalense'],
-           initgues=configobj['initgues'],
-           skysub=configobj['skysub'],
-           crsigmas=configobj['crsigmas'],
-           crradius=configobj['crradius'],
-           crthresh=configobj['crthresh'],
-           badinpdq=configobj['badinpdq'],
-           crmask=configobj['crmask'],
-           shadcorr=configobj['shadcorr'],
-           verbose=configobj['verbose'],)
-
-
-# This replaces the help for the function which is also printed in the HTML
-# and TEAL
-wf3rej.__doc__ = getHelpAsString(docstring=True)
+#check to see if this makes sense
+if __name__ == "main":
+    """called system prompt, return the default corner locations """
+    import sys
+    wf3rej(sys.argv[1])
