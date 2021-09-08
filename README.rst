@@ -12,7 +12,7 @@ WFC3Library
 This repository contains wfc3tools with updated documentation.
 For more information please see the `online documentation <http://wfc3tools.readthedocs.io/>`_.
 
-In addition, WFC3 Library contains complimentary notebooks mentioned in the `WFC3 Data Handbook <https://hst-docs.stsci.edu/wfc3dhb>`. These notebooks include:
+In addition, WFC3 Library contains complimentary notebooks mentioned in the `WFC3 Data Handbook <https://hst-docs.stsci.edu/wfc3dhb>`_. These notebooks include:
 
 - Manual Recalibration of Images using CALWF3
 - WFC3 UVIS Filter Transformations with stsynphot
