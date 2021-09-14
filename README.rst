@@ -14,25 +14,24 @@ Here the user will find the latest Python-based software notebooks for the Wide 
 WFC3Library is the primary repository for new notebooks, including color correction, photometric tools, spectroscopic tools, and other analysis. This repository contains the complimentary notebooks mentioned in the `WFC3 Data Handbook <https://hst-docs.stsci.edu/wfc3dhb>`_. These notebooks include:
 
 - Manual Recalibration of Images using CALWF3
-- How to use `wfc3_dash` on DASH data
-- WFC3 UVIS Filter Transformations with stsynphot
+- WFC3/UVIS Filter Transformations with stsynphot
 - Flux Unit Conversions with synphot and stsynphot
 - Synthetic Photometry Examples for WFC3
-- WFC3 UVIS Time-dependent Photometry
+- WFC3/UVIS Time-dependent Photometry
 - Calculating WFC3 Zeropoints with STSynphot
 
-Each folder in `notebooks` has an individual README.md with further details.
+Each folder in ``notebooks`` has an individual README.md with further details.
 
 Installation
 ------------
 
-All notebooks require the same anaconda virtual environment named `wfc3_env`. To create the virtual environment, run this line in a terminal window:
+All notebooks require the same anaconda virtual environment named ``wfc3_env``. To create the virtual environment, run this line in a terminal window:
 
 ::
 
     conda env create -f environment.yml
 
-To activate `wfc3_env`, run this line in a terminal window:
+To activate ``wfc3_env``, run this line in a terminal window:
 
 ::
 
