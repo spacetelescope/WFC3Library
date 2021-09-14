@@ -9,15 +9,15 @@ WFC3Library
     :target: http://www.astropy.org
     :alt: Powered by Astropy Badge
 
-This repository contains wfc3tools with updated documentation.
-For more information please see the `online documentation <http://wfc3tools.readthedocs.io/>`_.
+Here the user will find the latest Python-based software notebooks for the Wide Field Camera 3 (WFC3) on the Hubble Space Telescope (HST).
 
-In addition, WFC3 Library contains complimentary notebooks mentioned in the `WFC3 Data Handbook <https://hst-docs.stsci.edu/wfc3dhb>`_. These notebooks include:
+WFC3Library is the primary repository for new notebooks, including color correction, photometric tools, spectroscopic tools, and other analysis. This repository contains the complimentary notebooks mentioned in the `WFC3 Data Handbook <https://hst-docs.stsci.edu/wfc3dhb>`_. These notebooks include:
 
 - Manual Recalibration of Images using CALWF3
+- How to use `wfc3_dash` on DASH data
 - WFC3 UVIS Filter Transformations with stsynphot
 - Flux Unit Conversions with synphot and stsynphot
-- Synphot and STSynphot Examples for WFC3
+- Synthetic Photometry Examples for WFC3
 - WFC3 UVIS Time-dependent Photometry
 - Calculating WFC3 Zeropoints with STSynphot
 
