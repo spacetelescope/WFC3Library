@@ -20,7 +20,7 @@ WFC3Library is the primary repository for new notebooks, including color correct
 - WFC3/UVIS Time-dependent Photometry
 - Calculating WFC3 Zeropoints with STSynphot
 
-Each folder in ``notebooks`` has an individual README.md with further details.
+Each folder in ``notebooks`` has an individual ``README.md`` with further details.
 
 Installation
 ------------
