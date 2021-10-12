@@ -11,7 +11,7 @@ WFC3Library
 
 Here the user will find the latest Python-based software notebooks for the Wide Field Camera 3 (WFC3) on the Hubble Space Telescope (HST).
 
-WFC3Library is the primary repository for new notebooks, including color correction, photometric tools, spectroscopic tools, and other analysis. This repository contains the complimentary notebooks mentioned in the `WFC3 Data Handbook <https://hst-docs.stsci.edu/wfc3dhb>`_. These notebooks include:
+WFC3Library is the primary repository for new notebooks, including color correction, photometric tools, spectroscopic tools, and other analysis. This repository contains the complementary notebooks mentioned in the `WFC3 Data Handbook <https://hst-docs.stsci.edu/wfc3dhb>`_. These notebooks include:
 
 - Manual Recalibration of Images using CALWF3
 - WFC3/UVIS Filter Transformations with stsynphot
