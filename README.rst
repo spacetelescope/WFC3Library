@@ -19,6 +19,8 @@ WFC3Library is the primary repository for new notebooks, including color correct
 - Synthetic Photometry Examples for WFC3
 - WFC3/UVIS Time-dependent Photometry
 - Calculating WFC3 Zeropoints with STSynphot
+- WFC3 Image Displayer and Analyzer
+- Masking Persistence in WFC3/IR Images
 
 Each folder in ``notebooks`` has an individual ``README.md`` with further details.
 
