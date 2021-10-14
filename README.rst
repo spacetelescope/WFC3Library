@@ -21,8 +21,9 @@ WFC3Library is the primary repository for new notebooks, including color correct
 - Calculating WFC3 Zeropoints with STSynphot
 - WFC3 Image Displayer and Analyzer
 - Masking Persistence in WFC3/IR Images
+- How to use `wfc3_dash` on DASH data
 
-Each folder in ``notebooks`` has an individual ``README.md`` with further details.
+Each folder in ``notebooks`` has an individual ``README.md`` with further details and a HTML file that can be opened in a browser after cloning this repository. The HTML file is identical to the notebook, except they contain output plots and tables.
 
 Installation
 ------------
@@ -39,7 +40,9 @@ To activate ``wfc3_env``, run this line in a terminal window:
 
     conda activate wfc3_env
 
-With the environment activated, you will be able to complete the notebooks.
+In addition, the individual ``README.md`` files in ``notebooks`` may have further installation instructions. Please read them to run the notebooks properly.
+
+With the environment activated and additional libraries installed based on the individual ``README.md`` files, you will be able to complete the notebooks.
 
 Contributing
 ------------
