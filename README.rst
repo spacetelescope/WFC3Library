@@ -11,7 +11,7 @@ WFC3Library
 
 Here the user will find the latest Python-based software notebooks for the Wide Field Camera 3 (WFC3) on the Hubble Space Telescope (HST).
 
-WFC3Library is the primary repository for new notebooks, including color correction, photometric tools, spectroscopic tools, and other analysis. This repository contains the complimentary notebooks mentioned in the `WFC3 Data Handbook <https://hst-docs.stsci.edu/wfc3dhb>`_. These notebooks include:
+WFC3Library is the primary repository for new notebooks, including color correction, photometric tools, spectroscopic tools, and other analysis. This repository contains the complementary notebooks mentioned in the `WFC3 Data Handbook <https://hst-docs.stsci.edu/wfc3dhb>`_. These notebooks include:
 
 - Manual Recalibration of Images using CALWF3
 - WFC3/UVIS Filter Transformations with stsynphot
@@ -19,8 +19,11 @@ WFC3Library is the primary repository for new notebooks, including color correct
 - Synthetic Photometry Examples for WFC3
 - WFC3/UVIS Time-dependent Photometry
 - Calculating WFC3 Zeropoints with STSynphot
+- WFC3 Image Displayer and Analyzer
+- Masking Persistence in WFC3/IR Images
+- How to use `wfc3_dash` on DASH data
 
-Each folder in ``notebooks`` has an individual ``README.md`` with further details.
+Each folder in ``notebooks`` has an individual ``README.md`` with further details and a HTML file that can be opened in a browser after cloning this repository. The HTML file is identical to the notebook, except they contain output plots and tables.
 
 Installation
 ------------
@@ -37,7 +40,9 @@ To activate ``wfc3_env``, run this line in a terminal window:
 
     conda activate wfc3_env
 
-With the environment activated, you will be able to complete the notebooks.
+In addition, the individual ``README.md`` files in ``notebooks`` may have further installation instructions. Please read them to run the notebooks properly.
+
+With the environment activated and additional libraries installed based on the individual ``README.md`` files, you will be able to complete the notebooks.
 
 Contributing
 ------------
