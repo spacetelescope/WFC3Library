@@ -22,6 +22,7 @@ WFC3Library is the primary repository for new notebooks, including color correct
 - WFC3 Image Displayer and Analyzer
 - Masking Persistence in WFC3/IR Images
 - How to use `wfc3_dash` on DASH data
+- Processing WFC3/UVIS Data with CALWF3 Using the v1.0 CTE-Correction
 
 Each folder in ``notebooks`` has an individual ``README.md`` with further details and a HTML file that can be opened in a browser after cloning this repository. The HTML file is identical to the notebook, except they contain output plots and tables.
 
