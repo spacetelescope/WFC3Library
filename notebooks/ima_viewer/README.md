@@ -1,6 +1,6 @@
-In this Jupyter Notebook tutorial, we will learn about the IMA file type for WFC3/IR observations, and use a set of tools (imported from `tools.py`) to visualize different FITS extensions and save output.
+In this Jupyter Notebook tutorial, we will learn about the IMA file type for WFC3/IR observations, and use a set of tools (imported from `ima_tools.py`) to visualize different FITS extensions and save output.
 
-This directory, once downloaded, should contain this README.md, the tutorial Jupyter Notebook easy_ima_viewer.ipynb, an `html` copy of the notebook, a `pdf` copy of the notebook, and the `tools.py` script.
+This directory, once downloaded, should contain this README.md, the tutorial Jupyter Notebook easy_ima_viewer.ipynb, an `html` copy of the notebook, a `pdf` copy of the notebook, and the `ima_tools.py` script.
 
 In order to run this Jupyter notebook, you must have the following packages installed in your environment:
 1. numpy
