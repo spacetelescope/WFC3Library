@@ -1,0 +1,18 @@
+*ipynb_checkpoints/
+*__pycache__
+*.fits
+*.log
+*.tar
+*.tar.gz
+*.tra
+
+# notebook-specific (created folders, downloaded files, etc.)
+*crds_cache/
+*grp/
+notebooks/exception_report/iepp01010/
+notebooks/persistence/13459.Visit29/
+notebooks/zeropoints/obsmodes_curves/
+notebooks/zeropoints/uvis_zp_tbl.txt
+
+# Mac OSX
+*.DS_Store
