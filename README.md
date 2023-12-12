@@ -1,6 +1,8 @@
 WFC3Library
 ===========
 
+**WARNING: This library is deprecated. For all properly maintained WFC3 notebooks, please see [HST Notebooks](https://github.com/spacetelescope/hst_notebooks).**
+
 Here the user will find the latest Python-based software notebooks for the Wide
 Field Camera 3 (WFC3) on the Hubble Space Telescope (HST). For our primary WFC3
 user-support tools, see [wfc3tools](https://github.com/spacetelescope/wfc3tools) and 
