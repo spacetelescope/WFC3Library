@@ -1,7 +1,9 @@
 WFC3Library
 ===========
-
-**WARNING: This library is deprecated. For all properly maintained WFC3 notebooks, please see [HST Notebooks](https://github.com/spacetelescope/hst_notebooks).**
+> [!WARNING]
+> This library is deprecated and the repository has been archived.
+>
+>  For all properly maintained WFC3 notebooks, please see [HST Notebooks](https://github.com/spacetelescope/hst_notebooks).**
 
 Here the user will find the latest Python-based software notebooks for the Wide
 Field Camera 3 (WFC3) on the Hubble Space Telescope (HST). For our primary WFC3
@@ -41,66 +43,6 @@ Each folder in `notebooks` has an individual `README.md` with further
 details and a HTML file that can be opened in a browser after cloning this 
 repository. The HTML file is identical to the notebook, except they contain 
 output plots and tables.
-
-Installation
-------------
-
-All notebooks require the virtual environment `stenv-stable` (last stable 
-version used for review was December 2022), which contains libraries necessary
-for processing and analyzing data from the Hubble Space Telescope (HST) and the
-James Webb Space Telescope (JWST).
-
-To install, see [stenv readthedocs](https://stenv.readthedocs.io/en/latest/)
-or [stenv GitHub](https://github.com/spacetelescope/stenv). 
-
-In addition, the individual `README.md` files in `notebooks` may have 
-further installation instructions. Please read them to run the notebooks 
-properly.
-
-With the environment activated and additional libraries installed based on the
-individual `README.md` files, you will be able to complete the notebooks.
-
-Installation (Legacy Environment)
----------------------------------
-
-**WARNING: `wfc3_env` is a legacy environment, meaning it is deprecated**
-**and no longer maintained. We recommend using `stenv-stable` in all cases.**
-
-All notebooks used to require the same anaconda virtual environment named 
-`wfc3_env`. To create the virtual environment, run this line in a terminal 
-window:
-
-    conda env create -f wfc3_env_legacy.yml
-
-To activate `wfc3_env`, run this line in a terminal window:
-
-    conda activate wfc3_env
-
-You can also create and activate `wfc3_env_no_builds`, which is `wfc3_env` 
-but without the build specifications to avoid platform specific conflicts.
-
-Please read the individual `README.md` files in `notebooks` for further 
-installation instructions.
-
-Contributing
-------------
-
-Please open a new issue or new pull request for bugs, feedback, or new features
-you would like to see. If there is an issue you would like to work on, please
-leave a comment and we will be happy to assist. New contributions and
-contributors are very welcome!
-
-WFC3Library follows the 
-[Astropy Code of Conduct](https://www.astropy.org/code_of_conduct.html)
-and strives to provide a welcoming community to all of our users and 
-contributors.
-
-Want more information about how to make a contribution?  Take a look at
-the the `astropy` 
-[contributing](https://www.astropy.org/contribute.html)
-and [developer](https://docs.astropy.org/en/stable/index.html#developer-documentation) 
-documentation.
-
 
 License
 -------
